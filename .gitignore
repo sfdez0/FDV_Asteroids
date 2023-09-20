@@ -1,0 +1,9 @@
+Library/
+Logs/
+obj/
+Packages/
+ProjectSettings/
+UserSettings/
+.vsconfig
+Assembly-CSharp.csproj
+Asteroids.sln
