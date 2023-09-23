@@ -1,4 +1,4 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -28,9 +28,9 @@ public class Bullet : MonoBehaviour
     GameObject bulletSpawner;
 
     /// <summary>
-    /// Vector que contiene el cambio de tamaÃ±o de los meteoritos
+    /// Cambio de tamaño de los meteoritos divididos
     /// </summary>
-    public Vector3 meteorScaleChange = new Vector3(-0.1f, -0.1f, -0.1f);
+    public static Vector3 scaleChange = new Vector3(0.1f, 0.1f, 0.1f);
 
     /// <summary>
     /// Funcion Start
@@ -62,31 +62,21 @@ public class Bullet : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Si colisiona con un enemigo
-        /*if (other.gameObject.tag == "Enemy")
-        {
-            // Destruimos enemigo y la propia bala
-            Destroy(other.gameObject);
-            Destroy(gameObject);
-
-            // Incrementamos la puntuacion
-            IncreaseScore();
-        }*/
-
         if (other.gameObject.tag == "Enemy")
         {
+            // Incrementamos la puntuacion
+            IncreaseScore();
+
             // Destruimos la bala
             Destroy(gameObject);
 
-            // Incrementamos la puntuacion
-            IncreaseScore();
-
+            // Diferenciamos si el meteorito se puede dividir o no
             Meteor meteor = other.gameObject.GetComponent<Meteor>();
-            if (meteor.canDivide)
+            if (meteor.canDivide == true)
             {
-                Debug.Log("DIVIDE");
-                // Instanciamos dos nuevos meteoritos mï¿½s pequeï¿½os en diferentes rotaciones
+                // Instanciamos dos nuevos meteoritos más pequeños en diferentes rotaciones
                 GameObject m1 = Instantiate(other.gameObject, transform.position, Quaternion.identity);
+                // Establecemos que el nuevo meteorito no pueda volver a dividirse
                 Meteor meteor_1 = m1.GetComponent<Meteor>();
                 meteor_1.canDivide = false;
 
@@ -94,15 +84,15 @@ public class Bullet : MonoBehaviour
                 Meteor meteor_2 = m2.GetComponent<Meteor>();
                 meteor_2.canDivide = false;
 
-                // Rotamos el primero 50ï¿½
+                // Rotamos el primero 50º
                 m1.transform.Rotate(new Vector3(0, 0, 1), 50f);
-                m1.transform.localScale += meteorScaleChange;
+                m1.gameObject.transform.localScale -= scaleChange;
 
-                // Rotamos el segundo 310ï¿½
+                // Rotamos el segundo 310º
                 m2.transform.Rotate(new Vector3(0, 0, 1), 310f);
-                m1.transform.localScale += meteorScaleChange;
+                m2.gameObject.transform.localScale -= scaleChange;
 
-                // Destruimos el meteorito
+                // Destruimos el meteorito "padre"
                 Destroy(other.gameObject);
             }
             else

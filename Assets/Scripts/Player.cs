@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -52,10 +53,22 @@ public class Player : MonoBehaviour
     public float yBorderLimit = 4.0f;
 
     /// <summary>
+    /// Define si el juego esta pausado y por lo tanto en el menu
+    /// </summary>
+    private static bool isGamePaused = false;
+
+    /// <summary>
     /// Funcion Start
     /// </summary>
     void Start()
     {
+        // Si el juego estaba pausado volvemos a activar el tiempo y puntos a 0 (han tocado el boton restart del menu)
+        if (isGamePaused)
+        {
+            ResumeGame();
+            SCORE = 0;
+        }
+
         // rigidbody nos permite aplicar fuerzas en el jugador
         _rigidbody = GetComponent<Rigidbody2D>();
     }
@@ -92,6 +105,14 @@ public class Player : MonoBehaviour
         {
             Shoot();
         }
+        else if (Input.GetKeyDown(KeyCode.Escape)) // Si presiiona el escape
+        {
+            // Pausamos el juego
+            PauseGame();
+
+            // Mostramos el menu
+            SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+        }
     }
 
     /// <summary>
@@ -120,6 +141,7 @@ public class Player : MonoBehaviour
         bool hasChanged = false;
         Vector3 actualPos = transform.position;
 
+        // Comprobamos si supera algun limite y alteramos la posicion al limite contrario
         if (actualPos.x > xBorderLimit)
         {
             actualPos.x = -xBorderLimit + 1;
@@ -155,5 +177,23 @@ public class Player : MonoBehaviour
     {
         // Instanciamos la bala en la posicion del BulletSpawner
         Instantiate(bulletPrefab, bulletSpawner.transform.position, Quaternion.identity);
+    }
+
+    /// <summary>
+    /// Funcion que pausa el juego
+    /// </summary>
+    private void PauseGame()
+    {
+        isGamePaused = true;
+        Time.timeScale = 0;
+    }
+
+    /// <summary>
+    /// Funcion que resume el juego
+    /// </summary>
+    private void ResumeGame()
+    {
+        isGamePaused = false;
+        Time.timeScale = 1;
     }
 }

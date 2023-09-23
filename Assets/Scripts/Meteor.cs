@@ -8,10 +8,10 @@ public class Meteor : MonoBehaviour
     /// <summary>
     /// Tiempo maximo de vida para los meteoritos
     /// </summary>
-    float maxLifeTime = 6;
+    float maxLifeTime = 7;
 
     /// <summary>
-    /// Varable que define si un meteorito puede dividirse al ser disparado 
+    /// Define si el meteorito puede dividirse en otros tras su destruccion
     /// </summary>
     public bool canDivide = true;
 
@@ -22,5 +22,18 @@ public class Meteor : MonoBehaviour
     {
         // Le damos un tiempo maximo de vida para salir de la pantalla
         Destroy(gameObject, maxLifeTime);
+    }
+
+    /// <summary>
+    /// Update que cambia la trayectoria de los meteoritos divididos
+    /// </summary>
+    private void Update()
+    {
+        // Comprobamos que sea un meteorito dividido de otro anterior
+        if (canDivide == false)
+        {
+            // Movemos la bala en la nueva direccion
+            transform.Translate(-transform.up * 2 * Time.deltaTime);
+        }
     }
 }
