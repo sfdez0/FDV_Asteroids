@@ -1,3 +1,7 @@
+/**
+ * Autor: Sergio Fernández Verdugo
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,10 +43,10 @@ public class EnemySpawner : MonoBehaviour
     /// </summary>
     void Update()
     {
-        // instanciamos enemigos s�lo si ha pasado tiempo suficiente desde el �ltimo.
+        // instanciamos enemigos solo si ha pasado tiempo suficiente desde el último.
         if (Time.time > spawnNext)
         {
-            // indicamos cu�ndo podremos volver a instanciar otro enemigo
+            // indicamos cuando podremos volver a instanciar otro enemigo
             spawnNext = Time.time + 60 / spawnRatePerMinute;
             // con cada spawn hay mas asteroides por minuto para incrementar la dificultad
             spawnRatePerMinute += spawnRateIncrement;

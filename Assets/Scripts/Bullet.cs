@@ -1,3 +1,7 @@
+/**
+ * Autor: Sergio FernÃ¡ndez Verdugo
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -28,7 +32,7 @@ public class Bullet : MonoBehaviour
     GameObject bulletSpawner;
 
     /// <summary>
-    /// Cambio de tamaño de los meteoritos divididos
+    /// Cambio de tamaÃ±o de los meteoritos divididos
     /// </summary>
     public static Vector3 scaleChange = new Vector3(0.1f, 0.1f, 0.1f);
 
@@ -74,7 +78,7 @@ public class Bullet : MonoBehaviour
             Meteor meteor = other.gameObject.GetComponent<Meteor>();
             if (meteor.canDivide == true)
             {
-                // Instanciamos dos nuevos meteoritos más pequeños en diferentes rotaciones
+                // Instanciamos dos nuevos meteoritos mÃ¡s pequeÃ±os en diferentes rotaciones
                 GameObject m1 = Instantiate(other.gameObject, transform.position, Quaternion.identity);
                 // Establecemos que el nuevo meteorito no pueda volver a dividirse
                 Meteor meteor_1 = m1.GetComponent<Meteor>();
@@ -84,11 +88,11 @@ public class Bullet : MonoBehaviour
                 Meteor meteor_2 = m2.GetComponent<Meteor>();
                 meteor_2.canDivide = false;
 
-                // Rotamos el primero 50º
+                // Rotamos el primero 50Âº
                 m1.transform.Rotate(new Vector3(0, 0, 1), 50f);
                 m1.gameObject.transform.localScale -= scaleChange;
 
-                // Rotamos el segundo 310º
+                // Rotamos el segundo 310Âº
                 m2.transform.Rotate(new Vector3(0, 0, 1), 310f);
                 m2.gameObject.transform.localScale -= scaleChange;
 

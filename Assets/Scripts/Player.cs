@@ -1,3 +1,7 @@
+/**
+ * Autor: Sergio Fern谩ndez Verdugo
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -38,7 +42,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rigidbody;
 
     /// <summary>
-    /// Puntuacion del jugador
+    /// Puntuaci贸n del jugador
     /// </summary>
     public static int SCORE = 0;
 
@@ -82,13 +86,13 @@ public class Player : MonoBehaviour
         float rotation = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
         float thrust = Input.GetAxis("Vertical") * thrustForce;
 
-        // La direcci髇 de empuje es .right (el eje X positivo)
+        // La direcci贸n de empuje es .right (el eje X positivo)
         thrustDirection = transform.right;
 
-        // Rotamos con el eje "Rotate" negativo para que la direcci髇 sea correcta
+        // Rotamos con el eje "Rotate" negativo para que la direcci贸n sea correcta
         transform.Rotate(Vector3.forward, -rotation);
 
-        // A馻dimos la fuerza capturada arriba a la nave del jugador
+        // A帽adimos la fuerza capturada arriba a la nave del jugador
         _rigidbody.AddForce(thrust * thrustDirection);
     }
 
@@ -110,7 +114,7 @@ public class Player : MonoBehaviour
             // Pausamos el juego
             PauseGame();
 
-            // Mostramos el menu
+            // Mostramos el men煤
             SceneManager.LoadScene("Menu", LoadSceneMode.Single);
         }
     }
@@ -118,13 +122,13 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Si el jugador colisiona con un meteorito reiniciamos la escena
     /// </summary>
-    /// <param name="other"></param> Valor de la colision
+    /// <param name="other"></param> Valor de la colisi贸n
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Si colisiona con un enemigo
         if (other.gameObject.tag == "Enemy")
         {
-            // Reseteamos puntuacion
+            // Reseteamos puntuaci贸n
             SCORE = 0;
 
             // Reseteamos la escena
